@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loki | Variants Profile</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #dedede;
+            line-height: 1.6;
+        }
+
+        * { box-sizing: border-box; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; margin: 0; }
+
+        /* --- 헤더 스타일 (기존 유지) --- */
+        .top-bar {
+            background-color: #f0f2df;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #031405;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .logo h1 { margin: 0; padding: 0; line-height: 1; }
+        .logo h1 a { display: block; }
+        .logo img { height: 40px; width: auto; vertical-align: middle; }
+
+        .utility-nav ul { display: flex; gap: 20px; }
+        .utility-nav a { color: #fff; font-size: 0.9em; transition: color 0.3s; }
+        .utility-nav a:hover { color: #00ff00; }
+        
+        .utility-nav a.active { color: #00ff00; font-weight: bold; }
+
+        /* --- 메인 컨텐츠 스타일 --- */
+        main {
+            width: 100%;
+            min-height: 80vh;
+            padding: 60px 0; /* 위아래 여백 */
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 1200px 그리드 컨테이너 */
+        .grid-container {
+            width: 1200px; /* 고정 폭 1200px */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개 */
+            gap: 30px; /* 박스 사이 간격 */
+        }
+
+        /* 정사각형 이미지 박스 */
+        .grid-item {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1; /* 정사각형 비율 고정 */
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid #333;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 배경 이미지 */
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.4s ease; /* 부드러운 전환 효과 */
+        }
+
+        /* 호버 시 나타나는 텍스트 오버레이 */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* 평소엔 안 보임 */
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        .overlay h3 {
+            font-size: 2em;
+            color: #00ff00; /* 로키 초록색 */
+            text-transform: uppercase;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            transform: translateY(20px); /* 아래에서 올라오는 효과를 위해 */
+            transition: transform 0.4s ease;
+        }
+
+        .overlay p {
+            color: #fff;
+            font-size: 1em;
+            margin-top: 10px;
+            transform: translateY(20px);
+            transition: transform 0.4s ease 0.1s; /* 0.1초 늦게 올라옴 */
+        }
+
+        
+        /* 마우스 올리면 이미지: 어두워짐 + 블러 + 살짝 확대 */
+        .grid-item:hover img {
+            filter: brightness(40%) blur(4px);
+            transform: scale(1.1);
+        }
+
+        /* 마우스 올리면 오버레이: 나타남 */
+        .grid-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* 마우스 올리면 텍스트: 제자리로 이동 */
+        .grid-item:hover .overlay h3,
+        .grid-item:hover .overlay p {
+            transform: translateY(0);
+        }
+
+
+        /* --- 푸터 스타일 (기존 유지) --- */
+        footer {
+            background-color: #111;
+            color: #ccc;
+            padding: 50px 5%;
+            border-top: 1px solid #333;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .footer-links h3 {
+            color: white;
+            font-size: 1.1em;
+            border-bottom: 2px solid #008000;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links li { margin-bottom: 10px; font-size: 0.95em; }
+        .footer-links a:hover { color: #00ff00; }
+        .connect-links p { margin-top: 5px; font-size: 0.95em; }
+        .copyright { text-align: center; border-top: 1px solid #333; padding-top: 25px; font-size: 0.85em; }
+
+        /* 반응형: 화면 작아지면 2줄, 1줄로 변경 */
+        @media (max-width: 1250px) {
+            .grid-container {
+                width: 90%;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+
+    <header>
+        <div class="top-bar">
+            <span>Marvel Loki Odinson</span>
+        </div>
+        <div class="main-header">
+            <div class="logo">
+                <h1>
+                    <a href="Index.html"> <img src="로고.png" alt="Loki Logo">
+                    </a>
+                </h1>
+            </div>
+            <nav class="utility-nav">
+                <ul>
+                    <li><a href="직무2타임라인.html">타임라인의오류</a></li> 
+                    <li><a href="직무2또다른나.html">다른거울속의나</a></li>
+                    <li><a href="직무2책임.html">책임의굴레</a></li>
+                    <li><a href="직무2영원한짐.html">영원한짐을지고</a></li>
+                    <li><a href="직무2드라마소개.html">드라마정보</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="grid-container">
+            
+            <div class="grid-item">
+                <img src="로키사진1.jpg" alt="Loki L1130">
+                <div class="overlay">
+                    <h3>LOKI L1130</h3>
+                    <p>The God of Mischief</p>
+                </div>
+            </div>
+
+            <div class="grid-item">
+                <img src="로키4.png" alt="Sylvie">
+                <div class="overlay">
+                    <h3>SYLVIE</h3>
+                    <p>The Variant</p>
+                </div>
+            </div>
+
+            <div class="grid-item">
+                <img src="로키1.png" alt="Classic Loki">
+                <div class="overlay">
+                    <h3>CLASSIC LOKI</h3>
+                    <p>Glorious Purpose</p>
+                </div>
+            </div>
+
+            <div class="grid-item">
+                <img src="로키6.png" alt="Kid Loki">
+                <div class="overlay">
+                    <h3>KID LOKI</h3>
+                    <p>King of the Void</p>
+                </div>
+            </div>
+
+            <div class="grid-item">
+                <img src="로키2.png" alt="President Loki">
+                <div class="overlay">
+                    <h3>PRESIDENT LOKI</h3>
+                    <p>Vote for Loki</p>
+                </div>
+            </div>
+
+            <div class="grid-item">
+                <img src="로키5.png" alt="Alligator Loki">
+                <div class="overlay">
+                    <h3>ALLIGATOR LOKI</h3>
+                    <p>Is he a Loki?</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <div class="shop-links">
+                <h3>SERIES</h3>
+                <ul>
+                    <li>Season 1</li>
+                    <li>Season 2</li>
+                    <li>Cast & Crew</li>
+                </ul>
+            </div>
+            <div class="info-links">
+                <h3>TVA INFO</h3>
+                <ul>
+                    <li>About TVA</li>
+                    <li>Miss Minutes</li>
+                    <li>Help Centre</li>
+                </ul>
+            </div>
+            <div class="policy-links">
+                <h3>POLICIES</h3>
+                <ul>
+                    <li>Timeline Rules</li>
+                    <li>Variant Policy</li>
+                </ul>
+            </div>
+            <div class="connect-links">
+                <h3>WATCH NOW</h3>
+                <p>Available on Disney+</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Marvel Studios. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('click', function() {
+            var audio = document.getElementById("bgm");
+            if (audio.paused) {
+                audio.play();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLocation = decodeURIComponent(window.location.pathname.split("/").pop());
+            const navLinks = document.querySelectorAll('.utility-nav a');
+
+            navLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                if (linkHref === currentLocation) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

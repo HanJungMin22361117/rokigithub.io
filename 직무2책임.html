@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loki | Bond of Responsibility</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #dedede;
+            line-height: 1.6;
+        }
+
+        * { box-sizing: border-box; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; margin: 0; }
+
+        /* 헤더 스타일 */
+        .top-bar {
+            background-color: #f0f2df;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #031405;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .logo h1 { margin: 0; padding: 0; line-height: 1; }
+        .logo h1 a { display: block; }
+        .logo img { height: 40px; width: auto; vertical-align: middle; }
+
+        .utility-nav ul { display: flex; gap: 20px; }
+        .utility-nav a { color: #fff; font-size: 0.9em; transition: color 0.3s; }
+        .utility-nav a:hover { color: #00ff00; }
+        
+        /* 현재 페이지 활성화 */
+        .utility-nav a.active { color: #00ff00; font-weight: bold; }
+
+        /* 메인 컨텐츠 스타일 */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px; /* 섹션 간 간격 */
+        }
+
+        /* --- [타임라인 페이지와 동일한 박스 스타일] --- */
+        .content-card {
+            width: 100%;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            box-shadow: 0 6px 15px rgba(0, 255, 0, 0.15);
+            border-radius: 12px; 
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 255, 0, 0.3);
+            border-color: #00ff00;
+        }
+
+        /* 단계 번호 배지 */
+        .badge {
+            background-color: #005500;
+            color: #00ff00;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: inline-block;
+            border-bottom-right-radius: 12px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+        }
+
+        /* 비디오 영역 */
+        .video-wrapper {
+            width: 100%;
+            background-color: #000;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+            max-height: 600px; /* 너무 길어지지 않게 제한 */
+        }
+
+        /* 텍스트 영역 */
+        .text-content {
+            padding: 40px 50px;
+            text-align: left;
+        }
+
+        .text-content h2 {
+            color: #00ff00;
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .text-content p {
+            color: #ccc;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        /* --- [새로 추가된 뮤직 플레이어 스타일] --- */
+        .music-player-section {
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+            border: 1px solid #005500;
+            border-radius: 50px; /* 둥근 알약 모양 */
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+        }
+
+        .music-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .music-icon {
+            font-size: 2em;
+            color: #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        .music-text h3 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.1em;
+        }
+
+        .music-text p {
+            margin: 5px 0 0 0;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        /* 오디오 컨트롤 커스텀 (브라우저 기본 스타일 활용하되 색상 반전) */
+        audio.custom-audio {
+            height: 40px;
+            outline: none;
+            filter: invert(90%) hue-rotate(100deg); /* 색상을 어둡게/초록빛으로 반전 */
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 5px #00ff00; }
+            50% { text-shadow: 0 0 20px #00ff00; }
+            100% { text-shadow: 0 0 5px #00ff00; }
+        }
+
+        /* 푸터 스타일 */
+        footer {
+            background-color: #111;
+            color: #ccc;
+            padding: 50px 5%;
+            border-top: 1px solid #333;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .footer-links h3 {
+            color: white;
+            font-size: 1.1em;
+            border-bottom: 2px solid #008000;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links li { margin-bottom: 10px; font-size: 0.95em; }
+        .footer-links a:hover { color: #00ff00; }
+        .connect-links p { margin-top: 5px; font-size: 0.95em; }
+        .copyright { text-align: center; border-top: 1px solid #333; padding-top: 25px; font-size: 0.85em; }
+
+    </style>
+</head>
+<body>
+
+
+    <header>
+        <div class="top-bar">
+            <span>Marvel Loki Odinson</span>
+        </div>
+        <div class="main-header">
+            <div class="logo">
+                <h1>
+                    <a href="Index.html"> <img src="로고.png" alt="Loki Logo">
+                    </a>
+                </h1>
+            </div>
+            <nav class="utility-nav">
+                <ul>
+                    <li><a href="직무2타임라인.html">타임라인의오류</a></li> 
+                    <li><a href="직무2또다른나.html">다른거울속의나</a></li>
+                    <li><a href="직무2책임.html">책임의굴레</a></li>
+                    <li><a href="직무2영원한짐.html">영원한짐을지고</a></li>
+                    <li><a href="직무2드라마소개.html">드라마정보</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        <section class="content-card">
+            <div class="badge">Turning Point</div>
+            
+            <div class="video-wrapper">
+                <video controls preload="auto" poster="책임의 굴레.png">
+                    <source src="책임의굴레영상1.mp4" type="video/mp4">
+                    브라우저가 동영상을 지원하지 않습니다.
+                </video>
+            </div>
+
+            <div class="text-content">
+                <h2>Glorious Purpose</h2>
+                <p>
+                    "큰 그림은 마음에 새기고 있어야 해, 대부분의 목적은 영광이기보다는 짐이야. 그리고 그걸 피하면 안돼." <br><br>
+                    항상 지배하고 군림하려 했던 오만함을 내려놓고, 타인을 위해 희생을 결심한 순간.
+                    로키는 자신이 진정으로 짊어져야 할 '영광스러운 목적'이 무엇인지 깨닫게 된다.
+                    그것은 권력이 아니라, 모두를 지키기 위한 무거운 책임이었다.
+                </p>
+            </div>
+        </section>
+
+        <section class="music-player-section">
+            <div class="music-info">
+                <div class="music-icon">🎵</div>
+                <div class="music-text">
+                    <h3>Purpose is Glorious</h3>
+                    <p>Loki Season 2 OST</p>
+                </div>
+            </div>
+            <audio controls class="custom-audio">
+                <source src="타임라인4음악.m4a" type="audio/mp3">
+            </audio>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <div class="shop-links">
+                <h3>SERIES</h3>
+                <ul>
+                    <li>Season 1</li>
+                    <li>Season 2</li>
+                    <li>Cast & Crew</li>
+                </ul>
+            </div>
+            <div class="info-links">
+                <h3>TVA INFO</h3>
+                <ul>
+                    <li>About TVA</li>
+                    <li>Miss Minutes</li>
+                    <li>Help Centre</li>
+                </ul>
+            </div>
+            <div class="policy-links">
+                <h3>POLICIES</h3>
+                <ul>
+                    <li>Timeline Rules</li>
+                    <li>Variant Policy</li>
+                </ul>
+            </div>
+            <div class="connect-links">
+                <h3>WATCH NOW</h3>
+                <p>Available on Disney+</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Marvel Studios. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 메인 배경음악 재생 (페이지 클릭 시)
+        document.addEventListener('click', function() {
+            var audio = document.getElementById("bgm");
+            if (audio.paused) {
+                audio.play();
+            }
+        });
+
+        // 네비게이션 현재 페이지 활성화 코드
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLocation = decodeURIComponent(window.location.pathname.split("/").pop());
+            const navLinks = document.querySelectorAll('.utility-nav a');
+
+            navLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                if (linkHref === currentLocation) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

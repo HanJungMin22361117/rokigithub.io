@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loki | Timeline of Error</title>
+    
+    <style>
+        
+        /*  기본 스타일 */
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #dedede;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        * { box-sizing: border-box; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; margin: 0; }
+
+        /* 스크롤바 스타일 */
+        ::-webkit-scrollbar { height: 8px; background-color: #111; }
+        ::-webkit-scrollbar-thumb { background-color: #a1a1a1; border-radius: 4px; }
+
+        /*  헤더 스타일 */
+     
+        .top-bar {
+            background-color: #f0f2df;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #031405;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .logo h1 { margin: 0; padding: 0; line-height: 1; }
+        .logo h1 a { display: block; }
+        .logo img { height: 40px; width: auto; vertical-align: middle; }
+
+        .utility-nav ul { display: flex; gap: 20px; }
+        .utility-nav a { color: #fff; font-size: 0.9em; transition: color 0.3s; }
+        .utility-nav a:hover { color: #00ff00; }
+
+        /* --- [추가됨] 현재 페이지 활성화 스타일 (색상 고정) --- */
+        .utility-nav a.active {
+            color: #00ff00; /* 녹색 고정 */
+            font-weight: bold; /* 굵게 표시 */
+        }
+
+        /*  타임라인 메인 스타일 */
+        
+        main {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory; 
+            gap: 40px; 
+            padding: 60px 5%; 
+            width: 100%;
+            align-items: flex-start; 
+        }
+
+        /* 각 단계별 섹션 (카드) 스타일 */
+        .timeline-stage {
+            display: block; 
+            flex: 0 0 85vw; 
+            flex-shrink: 0; 
+            max-width: 1000px;
+            scroll-snap-align: center;
+            
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            box-shadow: 0 6px 15px rgba(0, 255, 0, 0.15);
+            
+            /* overflow: hidden 삭제 유지 */
+            border-radius: 12px; 
+            position: relative;
+
+            /* 브라우저 렌더링 최적화 */
+            transform: translateZ(0); 
+            will-change: transform;
+            
+            /* 호버 효과 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* 마우스 올렸을 때 효과 */
+        .timeline-stage:hover {
+            transform: translateY(-10px) translateZ(0); 
+            box-shadow: 0 15px 30px rgba(0, 255, 0, 0.3); 
+            border-color: #00ff00; 
+        }
+
+        /* 단계 번호 스타일 */
+        .stage-number {
+            background-color: #005500;
+            color: #00ff00;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: inline-block;
+            border-top-left-radius: 12px; 
+            border-bottom-right-radius: 12px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+        }
+
+        /* 동영상 플레이어 영역 */
+        .video-wrapper {
+            width: 100%;
+            padding: 0; 
+            text-align: center;
+            background-color: #000; 
+            display: block;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .video-wrapper video {
+            
+            width: 99.8%; 
+            margin: 0 auto; 
+            
+           
+            aspect-ratio: 16 / 9; 
+            object-fit: cover;     
+            
+            display: block; 
+            box-shadow: none;
+            
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            
+            position: relative;
+            z-index: 1;
+        }
+
+        
+        .text-content {
+            padding: 30px 50px 50px 50px; 
+            text-align: left;
+        }
+
+        .text-content h2 {
+            color: #00ff00;
+            font-size: 2.0em; 
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+        }
+
+        .text-content p {
+            color: #ccc;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        
+        footer {
+            background-color: #111;
+            color: #ccc;
+            padding: 50px 5%;
+            border-top: 1px solid #333;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .footer-links h3 {
+            color: white;
+            font-size: 1.1em;
+            border-bottom: 2px solid #008000;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links li { margin-bottom: 10px; font-size: 0.95em; }
+        .footer-links a:hover { color: #00ff00; }
+        .connect-links p { margin-top: 5px; font-size: 0.95em; }
+        .copyright { text-align: center; border-top: 1px solid #333; padding-top: 25px; font-size: 0.85em; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <span>Marvel Loki Odinson</span>
+        </div>
+        <div class="main-header">
+            <div class="logo">
+                <h1>
+                    <a href="Index.html"> <img src="로고.png" alt="Loki Logo">
+                    </a>
+                </h1>
+            </div>
+            <nav class="utility-nav">
+                <ul>
+                    <li><a href="직무2타임라인.html">타임라인의오류</a></li> 
+                    <li><a href="직무2또다른나.html">다른거울속의나</a></li>
+                    <li><a href="직무2책임.html">책임의굴레</a></li>
+                    <li><a href="직무2영원한짐.html">영원한짐을지고</a></li>
+                    <li><a href="직무2드라마소개.html">드라마정보</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        <section class="timeline-stage">
+            <div class="stage-number">Stage 01</div>
+            <div class="video-wrapper">
+                <video controls preload="auto">
+                    <source src="타임라인영상1 (1).mp4" type="video/mp4">
+                    브라우저가 동영상을 지원하지 않습니다.
+                </video>
+            </div>
+            <div class="text-content">
+                <h2>The Prince of Asgard</h2>
+                <p>
+                    항상 형 토르의 그림자에 가려져 있던 장난의 신. <br>
+                    자신의 출생에 대한 비밀을 알게 되고, 아버지 오딘에게 인정받기 위해 잘못된 선택을 시작한다.
+                    그의 질투와 결핍은 비극의 씨앗이 되었다.
+                </p>
+            </div>
+        </section>
+
+        <section class="timeline-stage">
+            <div class="stage-number">Stage 02</div>
+            <div class="video-wrapper">
+                <video controls preload="auto">
+                    <source src="타임라인영상2.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="text-content">
+                <h2>The Invasion of New York</h2>
+                <p>
+                    타노스와 손을 잡고 지구를 침공한 로키. <br>
+                    "너희들은 지배받기를 원한다"고 외치며 왕이 되고자 했으나, 어벤져스에게 저지당한다.
+                    이 사건은 그를 우주적인 빌런으로, 그리고 패배자로 낙인찍었다.
+                </p>
+            </div>
+        </section>
+
+        <section class="timeline-stage">
+            <div class="stage-number">Stage 03</div>
+            <div class="video-wrapper">
+                <video controls preload="auto">
+                    <source src="타임라인영상3.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="text-content">
+                <h2>Sacrifice & Death</h2>
+                <p>
+                    형제애를 회복하고 아스가르드의 백성을 위해 싸우던 로키. <br>
+                    타노스 앞에서 자신을 "오딘의 아들"이라 칭하며 형을 구하기 위해 목숨을 바친다.
+                    그의 여정은 여기서 영광스럽게 끝나는 듯했다.
+                </p>
+            </div>
+        </section>
+
+        <section class="timeline-stage">
+            <div class="stage-number">Stage 04</div>
+            <div class="video-wrapper">
+                <video controls preload="auto">
+                    <source src="타임라인영상4.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="text-content">
+                <h2>Loki Variant L1130</h2>
+                <p>
+                    시간 여행의 오류로 인해 살아남은 '변종' 로키. <br>
+                    TVA(시간 변동 관리국)에 체포되어 자신의 삶이 정해진 각본이었다는 충격적인 진실을 마주한다.
+                    그는 이제 자신의 자유 의지를 증명해야 한다.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <div class="shop-links">
+                <h3>SERIES</h3>
+                <ul>
+                    <li>Season 1</li>
+                    <li>Season 2</li>
+                    <li>Cast & Crew</li>
+                </ul>
+            </div>
+            <div class="info-links">
+                <h3>TVA INFO</h3>
+                <ul>
+                    <li>About TVA</li>
+                    <li>Miss Minutes</li>
+                    <li>Help Centre</li>
+                </ul>
+            </div>
+            <div class="policy-links">
+                <h3>POLICIES</h3>
+                <ul>
+                    <li>Timeline Rules</li>
+                    <li>Variant Policy</li>
+                </ul>
+            </div>
+            <div class="connect-links">
+                <h3>WATCH NOW</h3>
+                <p>Available on Disney+</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Marvel Studios. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          
+            const currentLocation = decodeURIComponent(window.location.pathname.split("/").pop());
+            const navLinks = document.querySelectorAll('.utility-nav a');
+
+            navLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                
+                if (linkHref === currentLocation) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

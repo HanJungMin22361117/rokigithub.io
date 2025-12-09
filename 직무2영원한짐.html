@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loki | The Eternal Burden</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #dedede;
+            line-height: 1.6;
+        }
+
+        * { box-sizing: border-box; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; margin: 0; }
+
+        .top-bar {
+            background-color: #f0f2df;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #031405;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .logo h1 { margin: 0; padding: 0; line-height: 1; }
+        .logo h1 a { display: block; }
+        .logo img { height: 40px; width: auto; vertical-align: middle; }
+
+        .utility-nav ul { display: flex; gap: 20px; }
+        .utility-nav a { color: #fff; font-size: 0.9em; transition: color 0.3s; }
+        .utility-nav a:hover { color: #00ff00; }
+        
+        .utility-nav a.active { color: #00ff00; font-weight: bold; }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+        }
+
+        .content-card {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            box-shadow: 0 6px 15px rgba(0, 255, 0, 0.15);
+            border-radius: 12px; 
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 255, 0, 0.3);
+            border-color: #00ff00;
+        }
+
+        .badge {
+            background-color: #005500;
+            color: #00ff00;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: inline-block;
+            border-bottom-right-radius: 12px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+        }
+
+        .video-wrapper {
+            width: 100%;
+            background-color: #000;
+            position: relative;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+            max-height: 700px;
+            object-fit: cover;
+        }
+
+        .text-content {
+            padding: 40px 50px;
+            text-align: left;
+        }
+
+        .text-content h2 {
+            color: #00ff00;
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .text-content p {
+            color: #ccc;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        footer {
+            background-color: #111;
+            color: #ccc;
+            padding: 50px 5%;
+            border-top: 1px solid #333;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .footer-links h3 {
+            color: white;
+            font-size: 1.1em;
+            border-bottom: 2px solid #008000;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links li { margin-bottom: 10px; font-size: 0.95em; }
+        .footer-links a:hover { color: #00ff00; }
+        .connect-links p { margin-top: 5px; font-size: 0.95em; }
+        .copyright { text-align: center; border-top: 1px solid #333; padding-top: 25px; font-size: 0.85em; }
+
+    </style>
+</head>
+<body>
+
+   
+
+    <header>
+        <div class="top-bar">
+            <span>Marvel Loki Odinson</span>
+        </div>
+        <div class="main-header">
+            <div class="logo">
+                <h1>
+                    <a href="Index.html"> <img src="로고.png" alt="Loki Logo">
+                    </a>
+                </h1>
+            </div>
+            <nav class="utility-nav">
+                <ul>
+                    <li><a href="직무2타임라인.html">타임라인의오류</a></li> 
+                    <li><a href="직무2또다른나.html">다른거울속의나</a></li>
+                    <li><a href="직무2책임.html">책임의굴레</a></li>
+                    <li><a href="직무2영원한짐.html">영원한짐을지고</a></li>
+                    <li><a href="직무2드라마소개.html">드라마정보</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        <section class="content-card">
+            <div class="badge">The God of Stories</div>
+            
+            <div class="video-wrapper">
+                <video controls preload="metadata">
+                    <source src="영원한짐을지고영상.mp4" type="video/mp4">
+                    브라우저가 동영상을 지원하지 않습니다.
+                </video>
+            </div>
+
+            <div class="text-content">
+                <h2>For you, For all of us</h2>
+                <p>
+                    마침내 로키는 자신만의 진정한 '영광스러운 목적'을 찾았다. <br>
+                    그것은 누군가 위에 군림하는 왕이 되는 것이 아니었다. 
+                    모든 시간선과 그 안에 살아가는 생명들을 지키기 위해, 영원한 고독 속에 스스로를 가두는 숭고한 희생이었다.
+                    <br><br>
+                    그는 이제 더 이상 '장난의 신'이 아니다. 
+                    모든 이야기를 지탱하고, 영원한 짐을 기꺼이 짊어진 진정한 <b>'시간의 신'</b>이 되었다.
+                    <br><br>
+                    이 작품을 통해 로키가 성장한 여정이 시련속에서 성장하는 우리들의 삶과 겹쳐 보인다고 생각했다.
+                    <br>
+                    각자의 책임을 마주한 모든 이들에게 이 이야기가 작은 위로와 용기가 되길 바란다.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <div class="shop-links">
+                <h3>SERIES</h3>
+                <ul>
+                    <li>Season 1</li>
+                    <li>Season 2</li>
+                    <li>Cast & Crew</li>
+                </ul>
+            </div>
+            <div class="info-links">
+                <h3>TVA INFO</h3>
+                <ul>
+                    <li>About TVA</li>
+                    <li>Miss Minutes</li>
+                    <li>Help Centre</li>
+                </ul>
+            </div>
+            <div class="policy-links">
+                <h3>POLICIES</h3>
+                <ul>
+                    <li>Timeline Rules</li>
+                    <li>Variant Policy</li>
+                </ul>
+            </div>
+            <div class="connect-links">
+                <h3>WATCH NOW</h3>
+                <p>Available on Disney+</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Marvel Studios. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('click', function() {
+            var audio = document.getElementById("bgm");
+            if (audio.paused) {
+                audio.play();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLocation = decodeURIComponent(window.location.pathname.split("/").pop());
+            const navLinks = document.querySelectorAll('.utility-nav a');
+
+            navLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                if (linkHref === currentLocation) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

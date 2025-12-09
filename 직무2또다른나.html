@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loki | Characters</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #dedede;
+            line-height: 1.6;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .top-bar {
+            background-color: #f0f2df;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #031405;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .logo h1 {
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .logo h1 a {
+            display: block;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            vertical-align: middle;
+        }
+
+        .utility-nav ul {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .utility-nav a {
+            color: #fff;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .utility-nav a:hover {
+            color: #00ff00;
+        }
+
+        /* --- [수정됨] 현재 페이지 활성화 스타일 (빛 효과 제거) --- */
+        .utility-nav a.active {
+            color: #00ff00; /* 녹색 고정 */
+            font-weight: bold; /* 글씨만 약간 굵게 */
+            /* text-shadow 제거됨 */
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 80vh;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .selection-container {
+            width: 100%;
+            max-width: 1160px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .selection-card {
+            display: flex;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 350px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .card-image {
+            width: 350px;
+            height: 100%;
+            flex-shrink: 0;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card-content {
+            flex-grow: 1;
+            padding: 0 50px;
+            text-align: left;
+        }
+
+        .card-content h2 {
+            font-size: 2.2em;
+            color: #00ff00;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .card-content p {
+            font-size: 1em;
+            color: #ccc;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .selection-card:hover {
+            transform: translateY(-8px);
+            border-color: #00ff00;
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.25);
+        }
+
+        .selection-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .selection-card {
+                flex-direction: column;
+                height: auto;
+            }
+            .card-image {
+                width: 100%;
+                height: 300px;
+            }
+            .card-content {
+                padding: 30px;
+                text-align: center;
+            }
+        }
+
+        footer {
+            background-color: #111;
+            color: #ccc;
+            padding: 40px 5%;
+            border-top: 1px solid #333;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .footer-links h3 {
+            color: white;
+            font-size: 1.1em;
+            border-bottom: 2px solid #008000;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .footer-links a:hover {
+            color: #00ff00;
+        }
+
+        .connect-links p {
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+   
+
+    <header>
+        <div class="top-bar">
+            <span>Marvel Loki Odinson</span>
+        </div>
+        <div class="main-header">
+            <div class="logo">
+                <h1>
+                    <a href="Index.html">
+                        <img src="로고.png" alt="Loki Logo">
+                    </a>
+                </h1>
+            </div>
+            <nav class="utility-nav">
+                <ul>
+                    <li><a href="직무2타임라인.html">타임라인의오류</a></li>
+                    <li><a href="직무2또다른나.html">다른거울속의나</a></li>
+                    <li><a href="직무2책임.html">책임의굴레</a></li>
+                    <li><a href="직무2영원한짐.html">영원한짐을지고</a></li>
+                    <li><a href="직무2드라마소개.html">드라마정보</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="selection-container">
+            
+            <a href="직무2상세1.html" class="selection-card">
+                <div class="card-image">
+                    <img src="로키사진1.jpg" alt="Loki Odinson">
+                </div>
+                <div class="card-content">
+                    <h2>Loki</h2>
+                    <p>장난의 신에서 이야기의 신으로.<br>그의 여정을 확인하세요.</p>
+                </div>
+            </a>
+
+            <a href="직무2상세2.html" class="selection-card">
+                <div class="card-image">
+                    <img src="등장인물사진1.jpg" alt="Characters">
+                </div>
+                <div class="card-content">
+                    <h2>Characters</h2>
+                    <p>TVA 요원들과 다양한 변종들.<br>주요 등장인물을 소개합니다.</p>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <div class="shop-links">
+                <h3>SERIES</h3>
+                <ul>
+                    <li>Season 1</li>
+                    <li>Season 2</li>
+                    <li>Cast & Crew</li>
+                </ul>
+            </div>
+            <div class="info-links">
+                <h3>TVA INFO</h3>
+                <ul>
+                    <li>About TVA</li>
+                    <li>Miss Minutes</li>
+                    <li>Help Centre</li>
+                </ul>
+            </div>
+            <div class="policy-links">
+                <h3>POLICIES</h3>
+                <ul>
+                    <li>Timeline Rules</li>
+                    <li>Variant Policy</li>
+                </ul>
+            </div>
+            <div class="connect-links">
+                <h3>WATCH NOW</h3>
+                <p>Available on Disney+</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Marvel Studios. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('click', function() {
+            var audio = document.getElementById("bgm");
+            if (audio.paused) {
+                audio.play();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 현재 페이지의 파일명을 가져와서 한글 깨짐 방지 처리
+            const currentLocation = decodeURIComponent(window.location.pathname.split("/").pop());
+            const navLinks = document.querySelectorAll('.utility-nav a');
+
+            navLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                // 현재 페이지와 링크 주소가 같으면 active 클래스 추가
+                if (linkHref === currentLocation) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
